@@ -1,0 +1,15 @@
+{% extends "tools/base.html" %}
+
+{% block title %}Send Message{% endblock %}
+
+{% block content %}
+
+
+
+<form action="{% url 'tools:message' %}" method="POST">
+  <textarea rows="4" cols="80" value="Type Message Here" type="text" name="message" required></textarea>
+  {% csrf_token %}
+  <input type="hidden" name="userID" value="{{ user.id }}">
+  <input type="submit" name="action" value="Send Message">
+
+{% endblock %}

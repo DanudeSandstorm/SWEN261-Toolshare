@@ -1,0 +1,52 @@
+{% extends "tools/base.html" %}
+
+{% block title %}Admin page for {{aUserData.user.first_name }} {{ aUserData.user.last_name }}{% endblock %}
+
+{% block content %}
+<h1>Administrate a User</h1>
+<!--div class="p-info change">
+    <form action="{% url 'tools:adminChangePrefs' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" value="{{ aUserData.id }}" name="aUser">
+        <input type="submit" name="{{ aUserData.id }}" value="Edit Information">
+    </form>
+</div-->
+
+<h2>Email</h2>
+<div class="p-info email">{{ aUserData.user.email }}</div>
+
+<h2>Birthday</h2>
+<div class="p-info bDay">{{ aUserData.birthday }}</div>
+
+<h2>Gender</h2>
+{% if aUserData.isMale %}
+    <div class="p-info gender">Male</div>
+{% else %}
+    <div class="p-info gender">Female</div>
+{% endif %}
+
+<h2>Location</h2>
+<div class="p-info loc">{{ aUserData.location }}</div>
+
+<h2>Average rating</h2>
+<div class="p-info rating">{{ aUserData.rating }}</div>
+
+<h2>ShareZone</h2>
+<div class="p-info zones"><a href="/tools/zone.html">{{ aUserData.shareZone }}</a></div>
+
+
+<h2>Tools</h2>
+{% for tool in Tools %}
+	<div class="p-info tools">{{ tool }}</div>
+{% endfor %}
+
+<div class="p-info maketool"><a href="/tools/createTool.html" target="_blank">Create a new Tool</a></div>
+
+<form action="{% url 'tools:administrateUser' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="userDataID" value="{{ aUserData.id }}">
+    <input type="submit" name="Action" value="Kick">
+    <!--<input type="submit" name="{{ aUserData.id }}" value="Kick">-->
+</form>
+
+{% endblock %}

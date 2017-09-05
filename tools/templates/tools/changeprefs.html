@@ -1,0 +1,47 @@
+{% extends "tools/base.html" %}
+
+{% block title %}Change Information{% endblock %}
+
+{% block content %}
+<h1>Change Information</h1>
+
+<form action="{% url 'tools:changeprefs' %}" method="post">
+  {% csrf_token %}
+  <p>First Name:<br/>
+  <input value="{{ fname }}" type="text" name="fname" required>
+  {% if fname_error %}<br><div class="error-msg">{{ fname_error }}</div>{% endif %}
+  </p>
+  
+  <p>Last Name:<br/>
+  <input value="{{ lname }}" type="text" name="lname" required>
+  {% if lname_error %}<br><div class="error-msg">{{ lname_error }}</div>{% endif %}
+  </p>
+  
+  <p>Password:<br/>
+  <input type="password" name="password">
+  {% if password_error %}<br><div class="error-msg">{{ password_error }}</div>{% endif %}
+  </p>
+      
+  <p>Confirm password:<br/>
+  <input type="password" name="password_confirm">
+  {% if password_different_error %}<br><div class="error-msg">{{ password_different_error }}</div>{% endif %}
+  </p>
+  
+  <p>Email Address:<br/>
+  <input value="{{ email }}" type="email" name="email" required>
+  {% if email_error %}<br><div class="error-msg">{{ email_error }}</div>{% endif %}
+  </p>
+  
+  <p>Birthday:<br/>
+  <input value="{{ bday }}" type="date" name="bday" required>
+  {% if bday_error %}<br><div class="error-msg">{{ bday_error }}</div>{% endif %}
+  </p>
+  
+  <p>Location:<br/>
+  <input value="{{ location }}" type="text" name="location" placeholder="Ex: 1234 Yolo street" required>
+  {% if location_error %}<br><div class="error-msg">{{ location_error }}</div>{% endif %}
+  </p>
+  
+  <p><input type="submit" value="Update"></p>
+</form>
+{% endblock %}

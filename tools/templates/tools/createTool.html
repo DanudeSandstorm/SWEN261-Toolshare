@@ -1,0 +1,52 @@
+{% extends "tools/base.html" %}
+
+{% block title %}Create a Tool{% endblock %}
+
+{% block content %}
+<h1>Create a new Tool</h1>
+
+<form action="{% url 'tools:createTool' %}" method="post">
+    <div class="create-tool">
+        {% csrf_token %}
+        <p>Name:<br/>
+        <input value="{{ name }}" type="text" name="name" required>
+        {% if tname_error %}<br/><div class="error-msg">{{ tname_error }}</div>{% endif %}
+        </p>
+        
+        <p>Tool type:<br/>
+        <select value="{{ toolType }}" name="toolType" required>
+        {% for tt in toolTypes %}
+            <option value="{{ tt}}">{{ tt}}</option>
+        {% endfor %}
+        </select> 
+        </p>
+        
+        <p>Location:<br/>
+        <select value="{{ location }}" name="location" required>
+        {% for loc in locations %}
+            <option value="{{loc.name}}">{{loc.name}}</option>
+        {% endfor %}
+        </select>
+        </p>
+
+        <p>Restriction<br/>
+        Allow this tool to be used by people under {{ rage }}? <input type="checkbox" name="restriction" value="True">
+        </p>
+
+        <p>Condition:<br>
+        <input value="{{ cond }}" type="number" name="cond" min="1" max="5" required>
+        {% if tcond_error %}<br/><div class="error-msg">{{ tcond_error }}</div>{% endif %}
+        </p>
+        
+        <p>Manufacturer:<br>
+        <input value="{{ manufacturer }}" type="text" name="manufacturer" required>
+        </p>
+
+        <p>Additional Details:<br/>
+        <input value="{{ details }}" type="text" name="details">
+        </p>
+
+        <p><input type="submit" value="Create"></p>
+    </div>
+</form>
+{% endblock %}

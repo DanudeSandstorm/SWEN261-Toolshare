@@ -1,0 +1,15 @@
+{% extends "tools/base.html" %}
+
+{% block title %}ToolShare{% endblock %}
+
+{% block content %}
+<h1>ToolShare</h1>
+
+<div class="loginAndRegister">
+<form action="/tools/login.html">
+    <input type="submit" value="Login">
+</form>
+<form action="/tools/register.html">
+    <input type="submit" value="Register">
+</form></div>
+{% endblock %}

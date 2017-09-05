@@ -1,0 +1,26 @@
+{% extends "tools/base.html" %}
+
+{% block title %} {{ userData.user.first_name }}'s Notifications {% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+
+    {% for n in notifications %}
+    <div class="col-md-12 outline">
+      <form action="{% url 'tools:notifications' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="alert" value="{{ n.id }}">
+        <input type="button" name="Action" value="X">
+        From {{ n.sender }}:<br/>
+        {{ n.message }}
+      </form>
+    </div>
+    {% endfor %}
+
+  </div>
+</div>
+
+{% endblock %}
+

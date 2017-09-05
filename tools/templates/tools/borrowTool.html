@@ -1,0 +1,27 @@
+{% extends "tools/base.html" %}
+
+{% block title %}Borrow Tool {{ tool.name }}{% endblock %}
+
+{% block content %}
+<h2>Tool name</h2>
+<div class="tool-name">{{ tool.name }}</div>
+
+<form action="{% url 'tools:showBorrowTool' %}" method="POST">
+    <div class="reserve-dates">
+        {% csrf_token %}
+        <input type="hidden" name="toolID" value="{{ tool.id }}">
+        
+        {% if date_error %}<div class="error-msg">{{ date_error }}</div>{% endif %}
+        <h2>Desired Reservation Start Date</h2>
+        <input type="date" name="startDate" required>
+
+        <h2>Desired Reservation End Date</h2>
+        <input type="date" name="endDate" required>
+        
+        <p><br/>Reservations start at midnight on start date and go through the end date.
+        <br/>(The actual return time will be 12:00am the day after)</p>
+        <br/>
+        <input type="submit" name="Submit reservation">
+    </div>
+</form>
+{% endblock %}

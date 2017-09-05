@@ -1,0 +1,35 @@
+{% extends "tools/base.html" %}
+
+{% block title %}{{ cs.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ cs.name }}</h1>
+
+<h2>Location</h2>
+<div class="cshed loc">{{ cs.location }}</div>
+
+<h2>ShareZone</h2>
+<div class="cshed szone">{{ cs.shareZone }}</div>
+
+<h2>Maximum Number of Tools</h2>
+<div class="cshed maxnum">{{ cs.maxNumberOfTools }}</div>
+
+<h2>Current Number Of Tools</h2>
+<div class="cshed num">{{ cs.numberOfTools }}</div>
+
+<h2>Tools in Shed</h2>
+{% for tool in curTools %}
+    <div class="cshed">{{ tool.name }}</div>
+    <div class="cshed"><form action="{% url 'tools:toolView' %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="toolID" value="{{ tool.id }}">
+      <input type="submit" name="" value="View this tool">
+    </form></div>
+    <br/>
+{% endfor %}
+
+<h2>Tools on Loan</h2>
+{% for tool in loanTools %}
+    <div class="cshed">{{ tool.name }}</div><br/>
+{% endfor %}
+{% endblock %}

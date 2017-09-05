@@ -1,0 +1,110 @@
+{% extends "tools/base.html" %}
+
+{% block title %}{{ ShareZone.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+ <h1>{{ ShareZone.name }}</h1>
+    <p align=center><a href="/tools/statistics.html">Community Statistics</a></p>
+  <div class="row outline">
+    <div class="col-md-4">
+      <h2>Tools</h2>
+
+      <a class="button" href="{% url 'tools:findTool' %}">Search for a tool</a>
+
+      <h3>Available Tools</h3>
+      {% for tool in aTools %}
+    	  <h4>{{tool.name}}<h4>
+        <p>
+          Type: {{tool.toolType}}<br>
+          Condition: {{tool.condition}}<br>
+          Location:
+          <div class="cslink">          
+            <form action="{% url 'tools:viewCommunityShed' %}" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="shedID" value="{{ tool.defaultLocation.id }}">
+              <input type="submit" name="" value="{{tool.defaultLocation}}">
+            </form>
+          </div>
+    
+          <form action="{% url 'tools:toolView' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="toolID" value="{{ tool.id }}">
+            <input type="submit" name="" value="View this tool">
+          </form>
+        </p>
+      {% endfor %}
+      
+
+      <h3>Unavailable Tools</h3> 
+      {% for tool in uTools %}
+    	  <h4>{{tool.name}}<h4>
+        <p>
+          Type: {{tool.toolType}}<br>
+          Condition: {{tool.condition}}<br>
+          Location:
+          <div class="cslink">          
+            <form action="{% url 'tools:viewCommunityShed' %}" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="shedID" value="{{ tool.currentLocation.id }}">
+              <input type="submit" name="" value="{{tool.currentLocation}}">
+            </form>
+          </div>
+    
+          <form action="{% url 'tools:toolView' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="toolID" value="{{ tool.id }}">
+            <input type="submit" name="" value="View this tool">
+          </form>
+        </p>
+      {% endfor %}
+
+    </div>
+
+    <div class="col-md-4">
+      <h2>Users</h2>
+      {% for usr in Users %}
+      <h4>{{usr}}<h4>
+      <form action="{% url 'tools:message' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="userID" value="{{ usr.id }}">
+        <input type="submit" name="" value="Message">
+      </form>
+      {% endfor %}
+    </div>
+
+    <div class="col-md-4">
+      <h2>Age Restriction</h2>
+      <div class="display szone age">
+        <h4>{{ ShareZone.restrictedAge }} years old</h4>
+      </div>
+
+      <h2>CommunityShed</h2>
+      <h4>
+      {% if needB %}
+        <a href="createcs.html"><button type="button">Create Community Shed</button></a>
+      {% else %}
+        {% for sd in CSheds %}
+          <div class="cslink">
+            <form action="{% url 'tools:viewCommunityShed' %}" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="shedID" value="{{ sd.id }}">
+              <input type="submit" name="" value="{{sd.name}}">
+            </form>
+            <br/>
+          </div>
+        {% endfor %}
+        {% endif %}
+      </h4>
+    </div>
+
+    <div class="col-md-12">
+      {% if ShareZone.name == 'DANGERZONE' %}
+        <center><img src="http://www.buffalogov.org/files/Images/highway4.JPG" title="Highway to the.... DANGERZONE!"/></center>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+

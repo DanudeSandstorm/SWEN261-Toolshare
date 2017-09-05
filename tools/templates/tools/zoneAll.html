@@ -1,0 +1,10 @@
+{% extends "tools/base.html" %}
+
+{% block title %}ShareZones{% endblock %}
+
+{% block content %}
+<h2>ShareZones</h2>
+{% for zn in list %}
+	<br><div class="szone zonelist">{{zn}}</div>
+{% endfor %}
+{% endblock %}

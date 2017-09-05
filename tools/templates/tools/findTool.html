@@ -1,0 +1,116 @@
+{% extends "tools/base.html" %}
+
+{% block title %}Find a Tool{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Find a Tool</h1>
+
+  <div class="row">
+
+    <div class="col-md-4">
+      <input type="button" onclick="showAdvancedOptions()" value="Show Advanced Options" id="sho-btn" />
+      <input type="button" onclick="hideAdvancedOptions()" value="Hide Advanced Options" id="hid-btn" class="hidden" />
+      <form action="{% url 'tools:findTool' %}" method="post">
+        {% csrf_token %}
+        Tool condition is 
+        <select name="condCmpFnc">
+          <option value=">">greater than</option>
+          <option value="=">exactly</option>
+          <option value="<">less than</option>
+        </select>
+        <input type="number" name="cond" min="1" max="5" required/>
+        <br /><br/>
+
+        <div class="hidden" id="advanced">
+          Tool name: <input type="text" name="toolname" />
+          <br/><br/>
+
+          Tool's type:
+          <select name="type">
+            <option value="-1">Any type</option>
+            {% for type in types %}
+            <option value="{{ type.id }}">{{ type.type }}</option>
+            {% endfor %}
+          </select>
+          <br/><br/>
+
+          Tool's location:
+          <select name="loc">
+            <option value="-1">Any location</option>
+            {% for cs in sheds %}
+            <option value="{{ cs.id }}">{{ cs.name }}</option>
+            {% endfor %}
+          </select>
+          <br/><br/>
+
+          Owner:
+          <select name="own">
+            <option value="-1">Any owner</option>
+            {% for user in users %}
+            <option value="{{ user.id }}">{{ user }}</option>
+            {% endfor %}
+          </select>
+          <br/><br/>
+
+          Show tools that are: <br/>
+          <input type="checkbox" name="rest" value="True" checked>Restricted<br/>
+          <input type="checkbox" name="unrest" value="True" checked>Not restricted<br/>
+
+          <br/><br/>
+        </div>
+        <input type="submit" name="action" value="Submit" />
+      </form>
+    </div>
+
+    <div class="col-md-8">
+      {% for tool in results %}
+      <div class="row outline">
+        <div class="col-md-6">
+          <b>Name:</b> {{ tool.name }}<br/>
+          <b>Location:</b> {{ tool.currentLocation }}</br>
+          <b>Type:</b> {{ tool.toolType }}</br>
+          <b>Owner: </b> {{ tool.owner }}</br>
+          <b>Available: </b> {% if tool.defaultLocation == tool.currentLocation %}Yes{% else %}No{% endif %}<br/>
+        </div>
+
+        <div class="col-md-6">
+          <div class="row">
+            <form action="{% url 'tools:showBorrowTool' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="toolID" value="{{ tool.id }}" />
+              <input type="submit" name="action" value="Reserve" />
+            </form>
+
+          </div>
+
+          <div class="row">
+            <form action="{% url 'tools:toolView' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="toolID" value="{{ tool.id }}" />
+              <input type="submit" name="action" value="View" />
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  function showAdvancedOptions() {
+    document.getElementById( 'advanced' ).className = '';
+    document.getElementById( 'sho-btn' ).className = 'hidden';
+    document.getElementById( 'hid-btn' ).className = '';
+  }
+
+  function hideAdvancedOptions() {
+    document.getElementById( 'advanced' ).className = 'hidden';
+    document.getElementById( 'sho-btn' ).className = '';
+    document.getElementById( 'hid-btn' ).className = 'hidden';
+  }
+</script>
+
+{% endblock %}
+

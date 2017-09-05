@@ -1,0 +1,16 @@
+{% extends "tools/base.html" %}
+
+{% block title %}{{ Tool.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ Tool.name }}</h1>
+
+<h2>Name</h2>
+{{ Tool.name }}
+
+<h2>Owner</h2>
+{{ Owner.name }}
+
+<h2>Type</h2>
+{{ toolType.name }}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "tools/base.html" %}
+
+{% block title %}Create a Community Shed{% endblock %}
+
+{% block content %}
+<h1>Create a new Community Shed</h1>
+
+<form action="{% url 'tools:createcs' %}" method="post">
+    <div class="create-shed">
+        {% csrf_token %}
+        <p>Name:<br>
+        <input type="text" name="name" required>
+        
+        <p>Max Number of Tools:<br>
+        <input value="0" type="age" name="maxTls" min="0" required>
+        
+        <p>Location:<br>
+        <input type="text" name="loc" required>
+        
+      
+        <p><input onclick="window.history.back()" type="submit" value="Create">
+    </div>
+</form>
+{% endblock %}

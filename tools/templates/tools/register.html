@@ -1,0 +1,120 @@
+{% extends "tools/base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <h1>Register</h1>
+
+  <form action="{% url 'tools:register' %}" method="post">
+    <div class="row">
+
+      {% csrf_token %}
+
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            First Name:<br/>
+            <input class="width-full" value="{{ fname }}" type="text" name="fname" required>
+            {% if fname_error %}<br><div class="error-msg">{{ fname_error }}</div>{% endif %}
+          </div>
+
+          <div class="col-md-6">
+            Last Name:<br/>
+            <input class="width-full" value="{{ lname }}" type="text" name="lname" required>
+            {% if lname_error %}<br><div class="error-msg">{{ lname_error }}</div>{% endif %}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            Password:<br/>
+            <input class="width-full" type="password" name="password" required>
+            {% if password_error %}<br><div class="error-msg">{{ password_error }}</div>{% endif %}
+          </div>
+      
+          <div class="col-md-6">
+            Confirm password:<br/>
+            <input class="width-full" type="password" name="password_confirm" required>
+            {% if password_different_error %}<br><div class="error-msg">{{ password_different_error }}</div>{% endif %}
+          </div>
+        </div>
+      </div> 
+
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-2">
+            Gender:<br/>
+            <select name="sex">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+
+          <div class="col-md-10">
+            Email Address:<br/>
+            <input class="width-full" value="{{ email }}" type="email" name="email" required>
+            {% if email_error %}<br><div class="error-msg">{{ email_error }}</div>{% endif %}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            Birthday:<br/>
+            <input value="{{ bday }}" type="date" name="bday" required>
+            {% if bday_error %}<br><div class="error-msg">{{ bday_error }}</div>{% endif %}
+          </div>
+  
+          <div class="col-md-6">
+            Address:<br/>
+            <input class="width-full" value="{{ address }}" type="text" name="address" placeholder="Ex: 1234 Yolo street" required>
+            {% if address_error %}<br><div class="error-msg">{{ address_error }}</div>{% endif %}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-10">
+            City:<br/>
+            <input class="width-full" value="{{ city }}" type="text" name="city" required>
+            {% if city_error %}<br><div class="error-msg">{{ city_error }}</div>{% endif %}
+          </div>
+
+          <div class="col-md-2">
+            State:<br/>
+            <input class="width-full" value="{{ state }}" type="text" name="state" placeholder="US State Postal Code" required>
+            {% if state_error %}<br><div class="error-msg">{{ state_error }}</div>{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <input type="button" onclick="showSZOptions( 1 )" value="Join an existing ShareZone" />
+        <input type="button" onclick="showSZOptions( 2 )" value="Create a new ShareZone" />
+        <div class="error-msg">{{ szerror }}</div>
+      </div>
+      <div class="col-md-6" id="szselect">
+      </div>
+    </div>
+
+    <div class="row">
+      <input class="center" type="submit" value="Register">
+    </div>
+  </form>
+</div>
+
+<script>
+  function showSZOptions( selection ) {
+    if( selection == 2 ) {
+      document.getElementById( 'szselect' ).innerHTML = 
+      'Create a new ShareZone<br/>Name: <input type="text" name="newSZName" placeholder="Name"> Zip Code: <input type="number" name="newSZZip" min="0" max="99999"> Restricted Age: <input type="number" name="newSZAge" min="1" max="120">';
+    } else if( selection == 1 ) {
+      document.getElementById( 'szselect' ).innerHTML =
+      'Join an existing ShareZone:<br/> <select name="shareZone">{% for sz in sharezones %}<option value="{{ sz.name }}">{{ sz.name }}</option>{% endfor %}</select>';
+    }
+  }
+</script>
+{% endblock %}
+

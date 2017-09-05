@@ -1,0 +1,108 @@
+{% extends "tools/base.html" %}
+
+{% block title %}{{ Tool.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ tool.name }}</h1>
+
+<div class="container">
+  <div class="row">
+  
+    <div class="col-md-12">
+      <b>Type:</b> {{ tool.toolType }}
+    </div>
+    
+    <div class="col-md-12">
+      <b>Location:</b> {{ tool.currentLocation }}
+    </div>
+
+    <div class="col-md-12">
+      <b>ShareZone:</b> {{ tool.defaultLocation.shareZone.name }}
+    </div>
+
+    <div class="col-md-12">
+      <b>Condition:</b> {{ tool.condition }}
+    </div>
+    
+    <div class="col-md-12">
+      <b>Manufacturer:</b> {{ tool.manufacturer }}
+    </div>
+    
+    <div class="col-md-12">
+      <b>Status:</b> {{ status }}
+    </div>
+    
+    <div class="col-md-12">
+      <b>Additional Details:</b> {{ tool.additionalDetails }}
+    </div>
+    
+    
+
+    <div class="col-md-3">
+      <form action="{% url 'tools:toolView' %}" method="POST">
+{% csrf_token %}
+        <input type="hidden" name="toolID" value="{{ tool.id }}">
+{% if moveToShed %}
+        <input type="submit" name="action" value="Move to Community Shed">
+{% elif moveToHome %}
+        <input type="submit" name="action" value="Move to your house">
+{% endif %}
+      </form>
+    </div>
+
+    <div class="col-md-3"> 
+      <form action="{% url 'tools:showBorrowTool' %}" method="POST">
+{% csrf_token %}
+        <input type="hidden" name="toolID" value="{{tool.id}}">
+        <input type="submit" name="action" value="Reserve this tool">
+      </form> 
+    </div>
+
+    <div class="col-md-3">
+      <form action="{% url 'tools:toolView' %}" method="POST">
+{% csrf_token %}
+        <input type="hidden" name="toolID" value="{{tool.id}}">
+        {% if curReserv %}
+        <input type="hidden" name="reservID" value="{{ curReserv.id }}">
+        <input type="submit" name="action" value="Take this tool home">
+{% endif %}
+      </form>
+    </div>
+    
+    <div class="col-md-3">
+      <form action="{% url 'tools:toolView' %}" method="POST">
+{% csrf_token %}
+        <input type="hidden" name="toolID" value="{{tool.id}}">
+{% if canReturn %}
+        <input type="submit" name="action" value="Tool has been returned">
+{% endif %}
+      </form>
+    </div>
+    
+    <div class="col-md-3">
+      <form action="{% url 'tools:toolView' %}" method="POST">
+{% csrf_token %}
+        <input type="hidden" name="toolID" value="{{tool.id}}">
+{% if canDel %}
+        <input type="submit" name="action" value="De-register tool">
+{% endif %}
+      </form>
+    </div>
+
+    <div class="col-md-3">
+{% if tReserv %}
+  {% for r in tReserv %}
+      <p>You have this tool reserved from {{ r.startDate }} until {{ r.endDate }}.</p>
+  {% endfor %}
+{% else %}
+      <p>You have not yet reserved this tool.</p>
+{% endif %}
+    </div>
+
+
+  </div>
+</div>
+
+{% endblock %}
+
+

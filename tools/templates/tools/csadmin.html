@@ -1,0 +1,54 @@
+{% extends "tools/base.html" %}
+
+{% block title %}{{ cs.name }}{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      {% for tool in csTools %}
+      <div class="outline">
+        {{ tool.name }}<br/>
+        <b>Owner:</b> {{ tool.owner }}<br/>
+        <b>Type:</b> {{ tool.toolType }}</br>
+        <b>Manufacturer:</b> {{ tool.manufacturer }}<br/>
+        {% if tool.isRestricted %}
+        <b>Restricted?:</b> Yes
+        {% else %}
+        <b>Restricted?:</b> No
+        {% endif %}
+        <br/>
+        {% if tool.currentLocation == tool.defaultLocation %}
+        In shed
+        {% elif too.status == 2 %}
+        Missing
+        {% else %}
+        On loan
+        <form action=" {% url 'tools:mycs' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="toolID" value="{{ tool.id }}">
+          <input type="submit" name="action" value="Mark as returned">
+          <input type="submit" name="action" value="Mark as missing">
+        </form>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        Max tools: {{ cs.maxNumberOfTools }}
+      </div>
+      <div class="row">
+        Admins:
+        {% for admin in csAdmins %}
+        <div class="">
+          {{ admin.first_name }} {{ admin.last_name }}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,137 @@
+body {
+    background:#1C3855;
+    color:#FFFFFF;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-align:center;
+}
+
+input {
+    color: #FFF;
+}
+
+div.display{
+    text-align:center;
+}
+
+.navbar {
+    width: 95%;
+    position: fixed;
+}
+
+.right {
+    float: right;
+    border-width: 10px;
+    display: inline;
+}
+
+.left {
+    float: left;
+    padding-width: 0 0 0 100px;
+    display: inline;
+}
+
+.center {
+    margin: 0 auto;
+}
+
+.width-900 {
+    width: 900px;
+    margin: auto auto;
+}
+
+.width-450 {
+    width: 450px;
+}
+
+.width-400 {
+    width: 355px;
+}
+
+.width-220 {
+    width: 214px;
+}
+
+.width-50 {
+    width: 50px;
+}
+
+.width-full {
+    width: 100%;
+}
+
+.outline {
+    text-align: center;
+    top:25px;
+    border: 2px solid white;
+    border-radius: 25px;
+}
+
+textarea {
+    color: #000;
+}
+
+p {
+    clear: both;
+}
+
+a {
+    color:#fff380;
+}
+
+div.error-msg {
+    color:red;
+    font-weight:bold;
+    text-align:center;
+}
+
+div.cshed {
+    text-align:center;
+
+}
+div.loginAndRegister {
+    width:200px;
+    margin:auto auto;
+}
+div.loginAndRegister input[value="Login"] {
+    float:left;
+}
+div.loginAndRegister input[value="Register"] {
+    float:right;
+}
+.tool-name, .reserve-dates, .create-shed, .create-tool {
+    text-align:center;
+}
+
+input, select {
+  color:black;  
+}
+button{
+    color: black;
+    border: 2px solid #FFFFFF !important;
+    border-radius:10px !important;
+}
+input[type="submit"] {
+    text-align:center;
+    color: black;
+    border: 2px solid #FFFFFF !important;
+    border-radius:10px !important;
+}
+div.cslink input[type="submit"]{
+    color: yellow;
+    background:none!important;
+    border:none!important;
+    padding:0!important;
+}
+
+a:hover {
+    text-shadow: #ffff00 0 0 3px;
+    color: #fff380 !important;
+    text-decoration:none;
+    -webkit-transition: all .4s linear 0s;
+    -moz-transition: all .4s linear 0s;
+    -ms-transition: all .4s linear 0s;
+    -o-transition: all .4s linear 0s;
+    transition: all .4s linear 0s;
+}

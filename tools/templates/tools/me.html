@@ -1,0 +1,62 @@
+{% extends "tools/base.html" %}
+
+{% block title %}{{userData.user.first_name }} {{ userData.user.last_name }}{% endblock %}
+
+{% block content %}
+<h1>User Page</h1>
+
+
+<h2>Name</h2>
+<div class="display p-info name">{{ userData.user.first_name }} {{ userData.user.last_name }}</div>
+
+<h2>Email</h2>
+<div class="display p-info email">{{ userData.user.email }}</div>
+
+<h2>Birthday</h2>
+<div class="display p-info bDay">{{ userData.birthday }}</div>
+
+<h2>Gender</h2>
+{% if userData.isMale %}
+    <div class="display p-info gender">Male</div>
+{% else %}
+    <div class="display p-info gender">Female</div>
+{% endif %}
+
+<h2>Location</h2>
+<div class="display p-info loc">{{ userData.location }}</div>
+
+<h2>Average rating</h2>
+<div class="display p-info rating">{{ rating }}</div>
+
+<h2>ShareZone</h2>
+<div class="display p-info zones">{{ userData.shareZone.name }}</div>
+
+
+<h2>Tools</h2>
+{% for tl in Tools %}
+	<div class="display p-info tools">{{tl}}</div>
+{% endfor %}
+
+<br/><div class="display p-info maketool"><a href="/tools/createTool.html">Create a new Tool</a></div>
+
+<h2>Unfinished Reservations</h2>
+{% for reserve in openReserves %}
+<div class="display p-info unfinished">{{ reserve.borrower }} wants to borrow  {{ reserve.tool.name }} from
+    {{ reserve.startDate }} to {{reserve.endDate }}.
+    <form action="{% url 'tools:confirmReservation' %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="reservID" value="{{ reserve.id }}">
+      <br><input type="submit" name="action" value="Approve"> <input type="button" onclick="showField()" value="Deny">
+      <div id="denyField"></div>
+    </form>
+    </div>
+{% endfor %}
+<br><div class="display p-info change"><a href="{% url 'tools:changeprefs' %}">Edit profile</a></div>
+
+<script>
+  function showField() {
+    document.getElementById( 'denyField' ).innerHTML = 'Why are you denying this borroying request?<br/><textarea rows="8" cols="80" name="msg">Why are you denying this borrowing request?</textarea><br/><input type="submit" name="action" value="Confirm">';
+  }
+</script>
+
+{% endblock %}

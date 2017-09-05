@@ -1,0 +1,48 @@
+{% extends "tools/base.html" %}
+
+{% block title %}Admin Page for {{ sz.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ sz.name }}</h1>
+
+<h2>Admins</h2>
+{% for a in szAdmins %}
+    <div class="display user admins">{{ a.user.first_name }} {{ a.user.last_name }}</div> <br/>
+{% endfor %}
+
+<h2>Unapproved Users</h2>
+{% for u in unUsers %}
+    <div class="display user unapproved">{{ u.user.first_name }} {{ u.user.last_name }}</div>
+    <form action="{% url 'tools:approveUser' %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="userDataID" value="{{ u.id }}">
+      <input type="submit" name="Status" value="Approve">
+      <input type="submit" name="Status" value="Deny">
+    </form><br/>
+{% endfor %}
+
+<h2>Users in ShareZone {{ sz.name }}</h2>
+  {% for u in szUsers %}
+  <div class="display user szone">{{ u.user.first_name }} {{ u.user.last_name }}</div>
+    {% if u != userData %}
+      <form action="{% url 'tools:administrateUser' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="userDataID" value="{{ u.id }}">
+        <br/><input type="submit" name="{{ u.id }}" value="Administrate">
+      </form><br/>
+    {% endif %}
+{% endfor %}
+
+<h2>Tools in ShareZone</h2>
+{% for t in szTools %}
+<p>
+<div class="display szone tools">
+    Name: {{ t.name }}<br/>
+    Type: {{ t.toolType }}<br/>
+    Owner: {{ t.owner.user.first_name }} {{ t.owner.user.last_name }}<br/>
+    Home Location: {{ t.defaultLocation }}<br/>
+    Current Location: {{ t.currentLocation }}<br/>
+</div>
+</p>
+{% endfor %}
+{% endblock %}

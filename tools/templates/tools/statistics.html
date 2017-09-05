@@ -1,0 +1,25 @@
+{% extends "tools/base.html" %}
+
+{% block title %}Community Statistics for {{ sz.name }}{% endblock %}
+
+{% block content %}
+<h2>Most Active Borrowers</h2>
+{% for b in mostActiveBorrowers %}
+    {{ b.user.first_name }} {{ b.user.last_name }}<br/>
+{% endfor %}
+
+<h2>Most Active Lenders</h2>
+{% for e in mostActiveLenders %}
+    {{ e.user.first_name }} {{ e.user.last_name }}<br/>
+{% endfor %}
+
+<h2>Most Borrowed Tools</h2>
+{% for t in mostUsedTools %}
+    {{ t.name }}<br/>
+{% endfor %}
+
+<h2>Highest Rated Users</h2>
+{% for u in highestRatedUsers %}
+    {{ u.user.first_name }} {{ u.user.last_name }}: {{ u.rating }}<br/>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "tools/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<h1>Login</h1>
+
+{% if invalidInfo %}
+  <div class="error-msg"><strong>Invalid username or password. Hope you know which one</strong></div>
+{% endif %}
+
+<form action="{% url 'tools:login' %}" method="post">
+  {% csrf_token %}
+  Email: <input value="{{ email_val }}" type="text" name="username"><br>
+  Password: <input value="{{ pword_val }}" type="password" name="password">
+  <br><input type="submit" value="Login" />
+</form>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "tools/base.html" %}
+
+{% block title %}Create a ShareZone{% endblock %}
+
+{% block content %}
+<h1>Create a new ShareZone</h1>
+
+<div class="display createsz-form">
+<form action="{% url 'tools:createsz' %}" method="post">
+  {% csrf_token %}
+  <p>Name:<br>
+  <input type="text" name="sname" required>
+  
+  <p>Restricted Age:<br>
+  <input value="10" type="age" name="rage" min="0" max="120" required>
+  
+  <p><input type="submit" value="Create">
+</form></div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "tools/base.html" %}
+
+{% block content %}
+<h2>Tools</h2>
+
+
+
+{% for tool in Tools %}
+	<h4>{{tool.name}}<h4>
+    <p>
+    Type: {{tool.toolType}}<br>
+    Condition: {{tool.condition}}<br>
+    
+    Location:
+    <div class="cslink">
+    <form action="{% url 'tools:viewCommunityShed' %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="shedID" value="{{ tool.defaultLocation.id }}">
+      <input type="submit" name="" value="{{tool.defaultLocation}}">
+    </form><br/></div>
+    
+    <form action="{% url 'tools:toolView' %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="toolID" value="{{ tool.id }}">
+      <input type="submit" name="" value="View this tool">
+    </form><br/>
+    </p>
+ {% endfor %}
+ 
+ <br/><div class="display p-info maketool"><a href="/tools/createTool.html">Create a new Tool</a></div>
+<br>
+{% endblock %}
+

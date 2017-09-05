@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load staticfiles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+  <title>{% block title %}ToolShare{% endblock %}</title>
+</head>
+
+<body>
+  <div class="navbar">
+    {% block navbar %}
+      {% if loggedin %}
+        <div class="left">
+          ToolShare
+          <a href="{% url 'tools:zone' %}">My ShareZone</a>
+          <a href="{% url 'tools:alltools' %}">My Tools</a>
+          {% if csadmin %}
+            <a href="{% url 'tools:mycs' %}">My Community Sheds</a>
+          {% endif %}
+        </div>
+
+        <div class="right">
+          {% if admin %}
+            <a href="{% url 'tools:adminpage' %}">Admin</a>
+          {% endif %}
+          <a href="{% url 'tools:notifications' %}">Notifications: {{ numNotifs }}</a>
+          <a href="{% url 'tools:userpage' %}">Profile</a>
+          <a href="{% url 'tools:logout' %}">Logout</a>
+        </div>
+      {% else %}
+        <div class="left">
+          ToolShare
+        </div>
+        <div class="right">
+          <a href="{% url 'tools:register' %}">Register</a>
+        </div>
+      {% endif %}
+      
+    {% endblock %}
+  </div>
+
+  <div id="content">
+    <br/><br/>
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>
+      
