@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	{% load static %}
+
+  <link rel="stylesheet" type="text/css" href="{% static 'css/foundation.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+</head>
+
+<body>
+	<center>
+		<!-- TITLE -->
+		<h1>Tools</h1>
+		
+		<h3>{{ username }}</h3>
+		<div class="row" style="width: 500px">
+		
+			<!-- TOOLS -->
+			<hr>
+            <form action="/share_app/borrowTool" method="post">
+				{% csrf_token %}
+				
+				{% if tools|length > 0 %}
+					<table>
+						<thead>
+							<td>Name</td>
+							<td>Type</td>
+							<td>Quality</td>
+							<td>Restricted</td>
+							<td>Owner</td>
+							<td>Shed</td>
+							<td>Borrow</td>
+						</thead>
+
+						{% for e in tools %}
+							<tr>
+								<td>{{ e.name }}</td>
+								<td>{{ e.type }}</td>
+								<td>{{ e.quality }}</td>
+								<td>{{ e.restricted }}</td>
+								<td>{{ e.owner }}</td>
+								<td>{{ e.inShed }}</td>
+								<td><input type="radio" name="tool" value="{{ e.id }}" required>
+							</tr>
+						{% endfor %}
+					</table>
+					<input type="submit" class="button" value="Borrow">
+				{% else %}
+					<p>There are no more available tools :(</p>
+				{% endif %}
+            </form>
+			
+			<a href="/share_app/"><input class="button" value="Back"></a>
+
+		</div>
+	</center>
+	
+</body>
+
+<script type="text/javascript" src="{% static 'js/vendor/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/foundation.min.js' %}"></script>
+
+<script type="text/javascript">
+
+</script>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/foundation.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+</head>
+<body>
+	<h4>Create Acddcount</h4>
+	<form method="POST" action="/user/create">
+		<div class="row">
+			<label>First Name
+				<input type="text" name="name" required>
+			</label>
+			<label>Last Name
+				<input type="text" name="name" required>
+			</label>
+		</div>
+
+		<div class="row">
+			<label>Birthdate
+				<input type="text" required>
+			</label>
+		</div>
+
+		<div class="row">
+			<label>Gender
+				<input type="radio" name="sex" value="male" required>Male
+				<input type="radio" name="sex" value="female" required>Female
+			</label>
+		</div>
+		
+		<div class="row">
+			<label>E-Mail
+				<input type="text" required>
+			</label>
+		</div>
+		
+		<div class="row">
+			<label>Address
+				<input type="text" required>
+			</label>
+		</div>
+		
+		<div class="row">
+			<label>ZIP
+				<input type="text" required>
+			</label>
+		</div>
+		
+		<input type="submit" class="button" value="Create User">
+	</form>
+</body>
+<script type="text/javascript" src="{% static 'js/vendor/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/foundation.min.js' %}"></script>
+</html>

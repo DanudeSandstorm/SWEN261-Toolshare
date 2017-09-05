@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <link rel="stylesheet" type="text/css" href="{% static 'css/foundation.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+</head>
+
+<body>
+  <div class="row">
+    <div class="large-12 columns">
+
+      <div class="row">
+        <div class="large-6 columns">
+          <h4>Login</h4>
+
+          <form method="POST" action="/user/create">
+            <div class="row">
+            <label>User Name
+              <input type="text" name="name" />
+            </label>
+            </div>
+
+            <div class="row">
+			<label>Password
+              <input type="text"  />
+            </label>
+            </div>
+			
+            <input type="submit" class="button" value="Login">
+			<input type="submit" class="button" value="Create New Account">
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+  
+
+
+</body>
+
+<script type="text/javascript" src="{% static 'js/vendor/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/foundation.min.js' %}"></script>
+
+</html>

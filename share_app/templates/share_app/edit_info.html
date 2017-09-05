@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<!-- TODO:
+	check length of year field
+	check password match
+	check unique username
+	check valid email address
+	check length of zip
+-->
+
+<html>
+<head>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/foundation.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+</head>
+
+<body>
+	<div class="header">
+		ToolShare
+	</div>
+	<div class="content">
+
+		<div class="topbar">
+			<center>
+				<!-- tool search -->
+				<a href="/share_app/searchTools/"><input type="submit" class="button" value="Search For Tool"></a>
+				
+				<!-- new tool -->
+				<a href="/share_app/addTool/"><input type="submit" id="toolButton" class="button" onclick="addToolFields()" value="New Tool"></a>
+
+				<!-- edit info -->
+				<a href="/share_app/edit_info/"><input type="submit" class="button" value="Edit Info"></a>
+			</center>
+		</div>
+
+		<div class="row">
+			<div class="large-12 column">
+				<form action="/share_app/saveAccountInfo/" method="post">
+					{% csrf_token %}
+					<br>
+					<!-- Passwords ------------------------------------------------------------------------>
+					<div class="row">
+						<div class="large-2 column">
+							<p>New Password</p>
+						</div>
+						<div class="large-5 column">
+							<input type="password" name="password" maxLength="32">
+						</div>
+						<div class="large-5 column">
+							<input type="password" name="password2" maxLength="32" placeholder="Confirm">
+						</div>
+					</div>
+					
+					<!-- First and Last Names ------------------------------------------------------------>
+					<div class="row">
+						<div class="large-2 column">
+							<p>Name</p>
+						</div>
+						<div class="large-5 column">
+							<input type="text" name="firstname" maxLength="30" value="{{ first_name }}" placeholder="First Name" required>
+						</div>
+						<div class="large-5 column">
+							<input type="text" name="lastname" maxLength="30" value="{{ last_name }}" placeholder="Last Name" required>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="large-2 column">
+							<p>E-Mail</p>
+						</div>
+						<div class="large-10 column">
+							<input type="text" name="email" maxLength="254" value="{{ email }}"required>
+						</div>
+					</div>
+
+					<!-- Address and Zip Code ------------------------------------------------------------>
+					<div class="row">
+						<div class="large-2 column">
+							<p>Address</p>
+						</div>
+						<div class="large-8 column">
+							<input type="text" name="address" value="{{ address }}" required>
+						</div>
+						<div class="large-2 column">
+							<input type="text" name="zip" maxLength="5" onkeydown="numOnly(event)" value="{{ zip }}" placeholder="ZIP" required>
+						</div>
+					</div>
+
+					<!-- Old Password ---------------------------------------------------------------->
+					<div class="row">
+						<div class="large-2 column">
+							<p>Old Password</p>
+						</div>
+						<div class="large-5 column">
+							<input type="password" name="oldPassword" required>
+						</div>
+						<div class="large-5 column"></div>
+					</div>
+
+					<div class="row">
+						<center><input type="submit" class="button" value="Save Info"></center>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+	</body>
+<p>&nbsp</p>
+	<div class="footer">
+		<p></p>
+	</div>
+	
+</body>
+
+<script type="text/javascript" src="{% static 'js/vendor/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/foundation.min.js' %}"></script>
+
+</html>

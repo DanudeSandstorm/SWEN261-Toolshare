@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<!-- TODO:
+	check length of year field
+	check password match
+	check unique username
+	check valid email address
+	check length of zip
+	check year past
+-->
+
+<html>
+<head>
+	{% load static %}
+	
+	<link rel="stylesheet" type="text/css" href="{% static 'css/foundation.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+</head>
+
+<body>
+	<div class="header">
+		ToolShare
+	</div>
+	<div class="content">
+		<div class="large-12 column">
+			<form action="/share_app/signup" method="post">
+				{% csrf_token %}
+				<br>
+				<!-- Username ------------------------------------------------------------------------>
+				<div class="row">
+					<div class="large-2 column">
+						<p>Username</p>
+					</div>
+					<div class="large-10 column">
+						<input type="text" name="username" maxLength="30" required>
+					</div>
+				</div>
+				
+				<!-- Passwords ------------------------------------------------------------------------>
+				<div class="row">
+					<div class="large-2 column">
+						<p>Password</p>
+					</div>
+					<div class="large-5 column">
+						<input type="password" name="password" maxLength="32" required>
+					</div>
+					<div class="large-5 column">
+						<input type="password" name="password2" maxLength="32" placeholder="Confirm" required>
+					</div>
+				</div>
+				
+				<!-- First and Last Names ------------------------------------------------------------>
+				<div class="row">
+					<div class="large-2 column">
+						<p>Name</p>
+					</div>
+					<div class="large-5 column">
+						<input type="text" name="firstname" maxLength="30" placeholder="First" required>
+					</div>
+					<div class="large-5 column">
+						<input type="text" name="lastname" maxLength="30" placeholder="Last" required>
+					</div>
+				</div>
+				
+				<!-- Birthdate ------------------------------------------------------------------------>
+				<div class="row">
+					<div class="large-2 column">
+						<p>Birth Date</p>
+					</div>
+					<label id="dobLabel">
+						<div class="large-3 column">
+							<select id="month" name="month" onchange="updateDays()">
+								<option value="01">January</option>
+								<option value="02">February</option>
+								<option value="03">March</option>
+								<option value="04">April</option>
+								<option value="05">May</option>
+								<option value="06">June</option>
+								<option value="07">July</option>
+								<option value="08">August</option>
+								<option value="09">September</option>
+								<option value="10">October</option>
+								<option value="11">November</option>
+								<option value="12">December</option>
+							</select>
+						</div>
+						<div class="large-3 column" id="dayDiv">
+						</div>
+						<div class="large-3 column">
+							<input type="text" pattern=".{4}" title="Year needs 4 digits" id="year" name="year" placeholder="YYYY" size="2" maxLength="4" onkeydown="numOnly(event)" required>
+						</div>
+						<div class="large-3 column"></div>
+					</label>
+				</div>
+
+				<div class="row">
+					<div class="large-2 column">
+						
+					</div>
+					<div class="large-10 column">
+						<input type="radio" name="gender" value="m" required>Male
+						&nbsp;
+						<input type="radio" name="gender" value="f" required>Female
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="large-2 column">
+						<p>E-Mail</p>
+					</div>
+					<div class="large-10 column">
+						<input type="text" name="email" maxLength="254" required>
+					</div>
+				</div>
+
+				<!-- Address and Zip Code ------------------------------------------------------------>
+				<div class="row">
+					<div class="large-2 column">
+						<p>Address</p>
+					</div>
+					<div class="large-8 column">
+						<input type="text" name="address" required>
+					</div>
+					<div class="large-2 column">
+						<input type="text" pattern=".{5}" title="ZIP code needs 5 digits" name="zip" maxLength="5" onkeydown="numOnly(event)" placeholder="ZIP" required>
+					</div>
+				</div>
+				
+				<!-- Sharezone and Submit ------------------------------------------------------------>
+				<div class="row">
+					<div class="large-2 column">
+						<p>Sharezone</p>
+					</div>	
+					<div class="large-5 column">
+						<select id="zoneSelect" onchange="checkNew()" name="zone">
+							<option value="new">New</option>
+							{% for e in sharezones %}
+								<option value="{{ e.id }}">{{e.name}}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<div class="large-5 column" id="zone"></div>
+				</div>
+
+				<div class="row">
+					<center>
+						<input type="submit" class="button" onclick="checkValues()" value="Create User">
+						<input type="reset" class="button" value="Clear">
+					</center>
+				</div>
+				
+			</form>
+		</div>
+	</div>
+<p>&nbsp</p>
+	<div class="footer2">
+		<p></p>
+	</div>
+	
+</body>
+
+<script type="text/javascript" src="{% static 'js/vendor/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/foundation.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/signup.js' %}"></script>
+
+</html>
